@@ -25,10 +25,12 @@ contents.each do |row|
       levels: 'country',
       roles: ['legislatorUpperBody', 'legislatorLowerBody']
     )
+    legislators = legislators.officials
     legislator_name = legislators.map(&:name)
+    legislator_string = legislator_name.join(', ')
   rescue
     'You can find your representatives by visiting www.commoncause.org/take-action/find-elected-officials'
   end
 
-  puts "#{name} #{zipcode} #{legislator_name}"
+  puts "#{name} #{zipcode} #{legislator_string}"
 end
