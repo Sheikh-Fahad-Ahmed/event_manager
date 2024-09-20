@@ -1,6 +1,8 @@
 require 'csv'
 require 'google/apis/civicinfo_v2'
+require 'erb'
 
+template_letter = File.read('form_letter.html')
 civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
 civic_info.key = File.read('./secret.key').strip
 
@@ -37,6 +39,11 @@ contents.each do |row|
   name = row[:first_name]
   zipcode = clean_zipcode(row[:zipcode])
   legislators = legislator_by_zipcode(zipcode)
+
+  personal_letter = template_letter.gsub('FRIST_NAME', name)
+  personal_letter.gsub!('LEGISLATORS',legislators)
+
+  puts personal_letter
   
 
   puts "#{name} #{zipcode} #{legislators}"
